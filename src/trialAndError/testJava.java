@@ -16,6 +16,7 @@ public class testJava {
 	private static JButton result = new JButton("=");
 	private static JButton add = new JButton("+");
 	private static JButton substract = new JButton("-");
+	private static JButton multiply = new JButton("*");
 	
 	private static JButton number0 = new JButton("0");
 	private static JButton number1 = new JButton("1");
@@ -29,15 +30,20 @@ public class testJava {
 	private static JButton number9 = new JButton("9");
 	
 	private static void buttonPressed(JButton button) {
+		if(isResult) {
+			screen.setText("");
+			isResult = false;
+		}
 		screen.append(button.getText());
 	}
 	
-	private static boolean isSum = false;
 	private static boolean isSubstract = false;
+	private static boolean isMultiply = false;
+	private static boolean isResult = false;
 	
 	private static int firstNumber;
 	
-	private static void sum() {		
+	private static void calculate() {		
 		
 		char[] digits = screen.getText().toCharArray();
 		int n = digits.length;
@@ -54,6 +60,10 @@ public class testJava {
 			isSubstract = false;
 			firstNumber -= number;
 		}
+		else if(isMultiply) {
+			isMultiply = false;
+			firstNumber *= number;
+		}
 		else {
 			firstNumber += number;
 		}
@@ -61,12 +71,19 @@ public class testJava {
 	}
 	
 	private static void substract() {
-		sum();
+		calculate();
 		isSubstract = true;
 	}
 	
+	private static void multiply() {
+		calculate();
+		isMultiply = true;
+	}
+	
 	private static void result() {
-			sum();
+			isResult = true;
+			calculate();
+			screen.setText(Integer.toString(firstNumber));
 			System.out.println(firstNumber);
 			firstNumber = 0;
 	}
@@ -100,6 +117,7 @@ public class testJava {
 		leftPanel.add(result);
 		leftPanel.add(add);
 		leftPanel.add(substract);
+		leftPanel.add(multiply);
 		
 		panel.add(number7);
 		panel.add(number8);
@@ -135,9 +153,10 @@ public class testJava {
 		number8.addActionListener(e -> buttonPressed(number8));
 		number9.addActionListener(e -> buttonPressed(number9));
 		
-		add.addActionListener(e -> sum());
+		add.addActionListener(e -> calculate());
 		result.addActionListener(e -> result());
 		substract.addActionListener(e -> substract());
+		multiply.addActionListener(e -> multiply());
 		
 		
 		delete.addActionListener(e -> clear());
