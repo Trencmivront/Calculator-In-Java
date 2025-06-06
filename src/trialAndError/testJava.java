@@ -90,6 +90,10 @@ public class testJava {
 	
 	private static void clear() {
 		screen.setText("");
+		isResult = false;
+		isMultiply = false;
+		isSubstract = false;
+		firstNumber = 0;
 	}
 	
 	public static void main(String[] args) {
