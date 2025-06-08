@@ -11,3 +11,5 @@ Calculator made by using Java Swing library.
 - This button doesn't actually have it's own function. For this button I use calculate function again but inside of the calculate function, I check whether '-' or '+' is pressed. I needed an initial value in order to substract last number from first one so I created a substract function and inside of that function I called calculate function. Then I set isSubstract boolean value to true after calculate function is called. This way I could have a first value by adding number to firstNumber and I will have a substract section inside of calculate function so I could substract them when I pressed another button. Hehe, no comma must be frustrating.
 ### 5. Multiply Function
 - Same like substract function it is an insect in calculate function. Works same as well.
+### 6. Division Function
+- Again again it's working like substract function. You know there is actually one function for all of the calculations. Because every one of them needs the sum at first.
