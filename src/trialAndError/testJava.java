@@ -4,32 +4,31 @@ import java.awt.*;
 
 public class testJava {
 	
+	static JFrame frame = new JFrame("Calculator");
+	static JPanel numPad = new JPanel(new GridLayout(4, 3));
+	static JPanel leftPanel = new JPanel(new GridLayout(6, 1));
+	static JPanel textPanel = new JPanel(new GridLayout());
+	static JTextArea screen = new JTextArea("");
 	
+	static JButton delete = new JButton("C");
+	static JButton result = new JButton("=");
+	static JButton add = new JButton("+");
+	static JButton substract = new JButton("-");
+	static JButton multiply = new JButton("*");
+	static JButton divide = new JButton("/");
 	
-	private static Dimension dim = new Dimension(275, 400);
-	private static JFrame frame = new JFrame("Calculator");
-	private static JPanel panel = new JPanel(new GridLayout(4, 3, 5, 5));
-	private static JPanel leftPanel = new JPanel(new GridLayout(6, 1, 5, 5));
-	private static JTextArea screen = new JTextArea("");
+	static JButton number0 = new JButton("0");
+	static JButton number1 = new JButton("1");
+	static JButton number2 = new JButton("2");
+	static JButton number3 = new JButton("3");
+	static JButton number4 = new JButton("4");
+	static JButton number5 = new JButton("5");
+	static JButton number6 = new JButton("6");
+	static JButton number7 = new JButton("7");
+	static JButton number8 = new JButton("8");
+	static JButton number9 = new JButton("9");
 	
-	private static JButton delete = new JButton("C");
-	private static JButton result = new JButton("=");
-	private static JButton add = new JButton("+");
-	private static JButton substract = new JButton("-");
-	private static JButton multiply = new JButton("*");
-	
-	private static JButton number0 = new JButton("0");
-	private static JButton number1 = new JButton("1");
-	private static JButton number2 = new JButton("2");
-	private static JButton number3 = new JButton("3");
-	private static JButton number4 = new JButton("4");
-	private static JButton number5 = new JButton("5");
-	private static JButton number6 = new JButton("6");
-	private static JButton number7 = new JButton("7");
-	private static JButton number8 = new JButton("8");
-	private static JButton number9 = new JButton("9");
-	
-	private static void buttonPressed(JButton button) {
+	static void buttonPressed(JButton button) {
 		if(isResult) {
 			screen.setText("");
 			isResult = false;
@@ -37,17 +36,18 @@ public class testJava {
 		screen.append(button.getText());
 	}
 	
-	private static boolean isSubstract = false;
-	private static boolean isMultiply = false;
-	private static boolean isResult = false;
+	static boolean isSubstract = false;
+	static boolean isMultiply = false;
+	static boolean isResult = false;
+	static boolean isDivide = false;
 	
-	private static int firstNumber;
+	static double firstNumber;
 	
-	private static void calculate() {		
+	static void calculate() {		
 		
 		char[] digits = screen.getText().toCharArray();
 		int n = digits.length;
-		int number = 0;
+		double number = 0;
 		
 		for(int i = 0; i < n; i++) {
 			number += Character.getNumericValue(digits[i]);
@@ -64,31 +64,40 @@ public class testJava {
 			isMultiply = false;
 			firstNumber *= number;
 		}
+		else if(isDivide) {
+			isDivide = false;
+			firstNumber /= number;
+		}
 		else {
 			firstNumber += number;
 		}
 		screen.setText("");
 	}
 	
-	private static void substract() {
+	static void substract() {
 		calculate();
 		isSubstract = true;
 	}
 	
-	private static void multiply() {
+	static void multiply() {
 		calculate();
 		isMultiply = true;
 	}
 	
-	private static void result() {
+	static void divide() {
+		calculate();
+		isDivide = true;
+	}
+	
+	static void result() {
 			isResult = true;
 			calculate();
-			screen.setText(Integer.toString(firstNumber));
+			screen.setText(Double.toString(firstNumber));
 			System.out.println(firstNumber);
 			firstNumber = 0;
 	}
 	
-	private static void clear() {
+	static void clear() {
 		screen.setText("");
 		isResult = false;
 		isMultiply = false;
@@ -99,20 +108,21 @@ public class testJava {
 	public static void main(String[] args) {
 		
 		screen.setEditable(false);
-		frame.setLayout(new BorderLayout());
+		frame.setLayout(null);
 		
 		frame.setLocation(600, 200);
 		
-		frame.add(panel, BorderLayout.CENTER);
-		frame.add(leftPanel, BorderLayout.WEST);
-		frame.add(screen, BorderLayout.NORTH);
+		frame.add(numPad);
+		numPad.setBounds(0, 40, 180, 300);
+		screen.setFont(new Font("Arial", Font.BOLD, 30));
+		textPanel.setBounds(0, 0, 260, 30);
+		frame.add(textPanel);
+		leftPanel.setBounds(181, 40, 95, 325);
+		frame.add(leftPanel);
 		
-		panel.setVisible(true);
+		textPanel.add(screen);
 		
-		panel.setSize(100, 100);
-		screen.setVisible(true);
-		
-		frame.setSize(dim);
+		frame.setSize(275, 400);
 		frame.setResizable(false);
 		
 		frame.setVisible(true);
@@ -122,29 +132,19 @@ public class testJava {
 		leftPanel.add(add);
 		leftPanel.add(substract);
 		leftPanel.add(multiply);
+		leftPanel.add(divide);
 		
-		panel.add(number7);
-		panel.add(number8);
-		panel.add(number9);
-		panel.add(number4);
-		panel.add(number5);
-		panel.add(number6);
-		panel.add(number1);
-		panel.add(number2);
-		panel.add(number3);
-		panel.add(new JButton()).setVisible(false);
-		panel.add(number0);
-		
-		number0.setVisible(true);
-		number1.setVisible(true);
-		number2.setVisible(true);
-		number3.setVisible(true);
-		number4.setVisible(true);
-		number5.setVisible(true);
-		number6.setVisible(true);
-		number7.setVisible(true);
-		number8.setVisible(true);
-		number9.setVisible(true);
+		numPad.add(number7);
+		numPad.add(number8);
+		numPad.add(number9);
+		numPad.add(number4);
+		numPad.add(number5);
+		numPad.add(number6);
+		numPad.add(number1);
+		numPad.add(number2);
+		numPad.add(number3);
+		numPad.add(new JButton()).setVisible(false);
+		numPad.add(number0);
 		
 		number0.addActionListener(e -> buttonPressed(number0));
 		number1.addActionListener(e -> buttonPressed(number1));
@@ -161,6 +161,7 @@ public class testJava {
 		result.addActionListener(e -> result());
 		substract.addActionListener(e -> substract());
 		multiply.addActionListener(e -> multiply());
+		divide.addActionListener(e -> divide());
 		
 		
 		delete.addActionListener(e -> clear());
